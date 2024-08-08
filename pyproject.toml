@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tjtools_package_tobiasjakobi"
+version = "1.0.0"
+authors = [
+  { name="Tobias Jakobi", email="tjakobi@math.uni-bielefeld.de" },
+]
+description = "Some Python tools that I use on most of my systems"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+    "Operating System :: POSIX :: Linux",
+]
+
+[project.urls]
+Homepage = "https://github.com/tobiasjakobi/tjtools-python"
+Issues = "https://github.com/tobiasjakobi/tjtools-python/issues"
