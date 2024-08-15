@@ -17,6 +17,9 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
 ]
 
+[project.scripts]
+razer_config = "tjtools.scripts:razer_config_cli"
+
 [project.urls]
 Homepage = "https://github.com/tobiasjakobi/tjtools-python"
 Issues = "https://github.com/tobiasjakobi/tjtools-python/issues"
