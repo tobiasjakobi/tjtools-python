@@ -18,7 +18,11 @@ classifiers = [
 ]
 
 [project.scripts]
+backup_manage = "tjtools.scripts:backup_manage_cli"
+clean_bashhistory = "tjtools.scripts:clean_bashhistory_cli"
+cpufreq_perf = "tjtools.scripts:cpufreq_perf_cli"
 razer_config = "tjtools.scripts:razer_config_cli"
+zstd_simple = "tjtools.scripts:zstd_simple_cli"
 
 [project.urls]
 Homepage = "https://github.com/tobiasjakobi/tjtools-python"

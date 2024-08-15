@@ -1,8 +1,26 @@
 # -*- coding: utf-8 -*-
 
+# SPDX-License-Identifier: GPL-2.0
+
+
 from sys import argv as sys_argv
 
-from .razer_config import main as razer_config_main
+def backup_manage_cli() -> int:
+    from .backup_manage import main as cli_main
+    return cli_main(sys_argv)
+
+def clean_bashhistory_cli() -> int:
+    from .clean_bashhistory import main as cli_main
+    return cli_main(sys_argv)
+
+def cpufreq_perf_cli() -> int:
+    from .cpufreq_perf import main as cli_main
+    return cli_main(sys_argv)
 
 def razer_config_cli() -> int:
-    return razer_config_main(sys_argv)
+    from .razer_config import main as cli_main
+    return cli_main(sys_argv)
+
+def zstd_simple_cli() -> int:
+    from .zstd_simple import main as cli_main
+    return cli_main(sys_argv)
