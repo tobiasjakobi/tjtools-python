@@ -18,5 +18,6 @@ SLOT="0"
 
 RDEPEND="
 	dev-python/dbus-python[${PYTHON_USEDEP}]
+	dev-python/i3ipc[${PYTHON_USEDEP}]
 	dev-python/python-systemd[${PYTHON_USEDEP}]
 "
