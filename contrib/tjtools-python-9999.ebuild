@@ -11,6 +11,8 @@ DESCRIPTION="Some Python tools that I use on most of my systemss"
 HOMEPAGE="https://github.com/tobiasjakobi/tjtools-python"
 EGIT_REPO_URI="https://github.com/tobiasjakobi/tjtools-python.git"
 
+KEYWORDS="x86 amd64"
+
 LICENSE="GPL-2"
 SLOT="0"
 
