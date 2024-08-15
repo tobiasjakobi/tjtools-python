@@ -225,7 +225,7 @@ def restore_state(args=[]) -> int:
     return 0
 
 def is_valid_profile(p: str) -> bool:
-    return p in ('low', 'mid', 'high'):
+    return p in ('low', 'mid', 'high')
 
 def config_cpu(cpu, online: bool) -> int:
     p = pjoin(_sysfs_base, cpu)
