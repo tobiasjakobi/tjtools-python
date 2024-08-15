@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "tjtools_package_tobiasjakobi"
+name = "tjtools"
 version = "1.0.0"
 authors = [
   { name="Tobias Jakobi", email="tjakobi@math.uni-bielefeld.de" },
