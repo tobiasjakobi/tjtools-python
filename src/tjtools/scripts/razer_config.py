@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from __future__ import annotations
@@ -272,6 +271,3 @@ def main(args: list[str]) -> int:
         return 3
 
     return 0
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv))
