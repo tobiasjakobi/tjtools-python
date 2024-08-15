@@ -1,5 +1,6 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+# SPDX-License-Identifier: GPL-2.0
 
 
 ##########################################################################################
@@ -24,7 +25,7 @@ def _usage(app: str):
 def _get_size(start_path: str) -> int:
     total_size = 0
 
-    for dirpath, dirnames, filenames in walk(start_path):
+    for dirpath, _, filenames in walk(start_path):
         for f in filenames:
             fp = pjoin(dirpath, f)
 
@@ -41,7 +42,14 @@ def _get_size(start_path: str) -> int:
 # Main
 ##########################################################################################
 
-def main(args: list) -> int:
+def main(args: list[str]) -> int:
+    '''
+    Main function.
+
+    Arguments:
+        args - list of string arguments from the CLI
+    '''
+
     location = None
     prefix = None
     singlethread = False
@@ -97,7 +105,7 @@ def main(args: list) -> int:
     if len(working) == 0:
         working = './'
 
-    if location != None:
+    if location is not None:
         current = realpath(location)
 
     print(f'info: estimated uncompressed size is {estimated_size} bytes', file=sys.stdout)
@@ -105,9 +113,9 @@ def main(args: list) -> int:
     output_file = '{}/{}{}.tar.zst'.format(current, '' if prefix is None else prefix, filebase)
 
     thread_arg = '--single-thread' if singlethread else '--threads=4'
-    zstd_args = ['zstd', '--compress', thread_arg, '--ultra', '-22', f'--size-hint={estimated_size}', '-o', output_file]
+    zstd_args = ('zstd', '--compress', thread_arg, '--ultra', '-22', f'--size-hint={estimated_size}', '-o', output_file)
 
-    tar_args = ['tar', '--create', '--file', '-', f'--directory={working}', filebase]
+    tar_args = ('tar', '--create', '--file', '-', f'--directory={working}', filebase)
 
     tar_p = Popen(tar_args, stdin=DEVNULL, stdout=PIPE)
     zstd_p = Popen(zstd_args, stdin=tar_p.stdout)
@@ -121,6 +129,3 @@ def main(args: list) -> int:
         print(f'error: zstd process failed with error code {zstd_p.returncode}', file=sys.stderr)
 
     return 0
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv))

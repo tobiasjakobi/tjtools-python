@@ -1,5 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+# SPDX-License-Identifier: GPL-2.0
+
 
 '''
 TODOs:
@@ -402,7 +404,14 @@ def do_sync(args: list) -> int:
 # Main
 ##########################################################################################
 
-def main(args: list):
+def main(args: list[str]) -> int:
+    '''
+    Main function.
+
+    Arguments:
+        args - list of string arguments from the CLI
+    '''
+
     if len(args) < 2:
         _usage(args[0])
 
@@ -435,6 +444,3 @@ def main(args: list):
 
     if command(args[2:]) != 0:
         return 2
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv))

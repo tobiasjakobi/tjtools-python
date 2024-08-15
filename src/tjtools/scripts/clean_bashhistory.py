@@ -1,12 +1,11 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+# SPDX-License-Identifier: GPL-2.0
 
 
 ##########################################################################################
 # Imports
 ##########################################################################################
-
-import sys
 
 from os.path import expanduser
 
@@ -24,10 +23,15 @@ _filename = expanduser('~/.bash_history')
 
 def main(args: list[str]) -> int:
     '''
+    Main function.
+
+    Arguments:
+        args - list of string arguments from the CLI
+
     Deduplicates and flips the lines of the Bash history.
     '''
 
-    unique_lines = []
+    unique_lines = list()
 
     with open(_filename, mode='r+') as f:
         for line in reversed(list(f)):
@@ -48,6 +52,3 @@ def main(args: list[str]) -> int:
             print(line, end='', file=f)
 
     return 0
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv))

@@ -1,5 +1,6 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+# SPDX-License-Identifier: GPL-2.0
 
 
 ##########################################################################################
@@ -302,6 +303,13 @@ def set_state(args: list[str]) -> int:
 ##########################################################################################
 
 def main(args: list[str]) -> int:
+    '''
+    Main function.
+
+    Arguments:
+        args - list of string arguments from the CLI
+    '''
+
     switcher = {
         '--init': core_map,
         '--save': save_state,
@@ -325,6 +333,3 @@ def main(args: list[str]) -> int:
         return 2
 
     return 0
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv))
