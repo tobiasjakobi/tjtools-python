@@ -9,6 +9,7 @@
 from logging import Logger
 
 from ..brightness import modify_state as modify_brightness
+from .common import ActionConfig
 
 
 ##########################################################################################
@@ -18,14 +19,12 @@ from ..brightness import modify_state as modify_brightness
 _subsystem = 'video'
 _log_prefix = f'ACPI: {_subsystem}: '
 
-_default_modifier = 15
-
 
 ##########################################################################################
 # Functions
 ##########################################################################################
 
-def handle_event(lg: Logger, action: str, device: str) -> int:
+def handle_event(lg: Logger, cfg: ActionConfig, action: str, device: str) -> int:
     '''
     Generic video handling function.
 
@@ -36,9 +35,9 @@ def handle_event(lg: Logger, action: str, device: str) -> int:
     '''
 
     if action == 'brightnessdown' and device == 'BRTDN':
-        value = str(-_default_modifier)
+        value = str(-cfg.brightness_modifier)
     elif action == 'brightnessup' and device == 'BRTUP':
-        value = str(_default_modifier)
+        value = str(cfg.brightness_modifier)
     else:
         lg.error(_log_prefix + f'unknown action/device: {action}/{device}')
 

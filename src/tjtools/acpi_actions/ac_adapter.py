@@ -13,6 +13,7 @@ from subprocess import run as prun
 
 from .. import brightness
 from ..sysfs_helper import read_sysfs
+from .common import ActionConfig
 
 
 ##########################################################################################
@@ -20,15 +21,12 @@ from ..sysfs_helper import read_sysfs
 ##########################################################################################
 
 _state_file = Path('/run/acpi_acadapter')
-_sysfs_base = Path('/sys/class/power_supply/ACAD')
+_sysfs_base = Path('/sys/class/power_supply')
 
 _subsystem = 'AC adapter'
 _log_prefix = f'ACPI: {_subsystem}: '
 
-_valid_ac_adapter = 'ACPI0003:01'
-
 _iconbase = 'Adwaita/symbolic/devices'
-_notify_user = 'liquid'
 
 
 ##########################################################################################
@@ -61,7 +59,7 @@ def _write_state(path: Path, state: int) -> None:
 
     path.write_bytes(state_bytes)
 
-def _exec_notify(msg: str) -> None:
+def _exec_notify(cfg: ActionConfig, msg: str) -> None:
     '''
     Helper to notify the user about AC adapter events.
 
@@ -72,7 +70,7 @@ def _exec_notify(msg: str) -> None:
     full_msg = f'Status: {msg}'
     icon = f'{_iconbase}/ac-adapter-symbolic.svg'
 
-    p_args = ('sudo', f'--user={_notify_user}', 'notify_wrapper', _subsystem, full_msg, icon)
+    p_args = ('sudo', f'--user={cfg.notify_user}', 'notify_wrapper', _subsystem, full_msg, icon)
 
     prun(p_args, check=True)
 
@@ -81,7 +79,7 @@ def _exec_notify(msg: str) -> None:
 # Functions
 ##########################################################################################
 
-def handle_init(lg: Logger) -> int:
+def handle_init(lg: Logger, cfg: ActionConfig) -> int:
     '''
     Initialization of AC adapter handling.
 
@@ -89,7 +87,7 @@ def handle_init(lg: Logger) -> int:
         lg - system logger
     '''
 
-    ac_state = read_sysfs(_sysfs_base / 'online')
+    ac_state = read_sysfs(_sysfs_base / cfg.ac_adapter_sysfs / 'online')
 
     if ac_state is None or not ac_state.isdigit():
         lg.warning(_log_prefix + 'invalid AC state (assuming offline)')
@@ -108,7 +106,7 @@ def handle_init(lg: Logger) -> int:
 
     return 0
 
-def handle_event(lg: Logger, device: str, identifier: str) -> int:
+def handle_event(lg: Logger, cfg: ActionConfig, device: str, identifier: str) -> int:
     '''
     Generic AC adapter handling function.
 
@@ -118,7 +116,7 @@ def handle_event(lg: Logger, device: str, identifier: str) -> int:
         identifier - identifier of AC adapter event
     '''
 
-    if device != _valid_ac_adapter:
+    if device != cfg.ac_adapter_device:
         lg.error(_log_prefix + f'invalid AC adapter: {device}')
 
         return 1

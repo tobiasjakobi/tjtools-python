@@ -11,6 +11,7 @@ from pathlib import Path
 from time import time
 
 from ..blank_screen import blank_screen
+from .common import ActionConfig
 
 from dbus import SystemBus, Interface as DBusInterface
 
@@ -29,15 +30,6 @@ _max_delay = 2400.0
 
 _state_power_button = Path('/run/acpi_powerbutton')
 _state_sleep_button = Path('/run/acpi_sleepbutton')
-
-'''
-System has three powerbutton ACPI devices (PBTN, LNXPWRBN:00 and PNP0C0C:00).
-Also PBTN creates two ACPI events each time the button is pressed.
-So we only react to LNXPWRBN:00.
-'''
-_valid_power_button = 'PBTN'
-_valid_sleep_button = 'SBTN'
-_valid_lid_button = 'LID'
 
 
 ##########################################################################################
@@ -66,7 +58,7 @@ def _suspend_system() -> None:
 
     iface.Suspend(False)
 
-def _lid_button(device: str, identifier: str) -> None:
+def _lid_button(cfg: ActionConfig, device: str, identifier: str) -> None:
     '''
     Handling of lid button event.
 
@@ -75,13 +67,13 @@ def _lid_button(device: str, identifier: str) -> None:
         identifier - identifier of event
     '''
 
-    if device != _valid_lid_button:
+    if device != cfg.lid_button:
         raise RuntimeError(f'invalid lid button: {device}')
 
     if identifier not in ('open', 'close'):
         raise RuntimeError(f'unknown lid state: {identifier}')
 
-def _sleep_button(device: str) -> None:
+def _sleep_button(cfg: ActionConfig, device: str) -> None:
     '''
     Handling of sleep button event.
 
@@ -89,7 +81,7 @@ def _sleep_button(device: str) -> None:
         device - device of event
     '''
 
-    if device != _valid_sleep_button:
+    if device != cfg.sleep_button:
         return
 
     try:
@@ -109,7 +101,7 @@ def _sleep_button(device: str) -> None:
     if abs(cur_time - last_time) < _max_delay:
         _suspend_system()
 
-def _power_button(device: str) -> None:
+def _power_button(cfg: ActionConfig, device: str) -> None:
     '''
     Handling of power button event.
 
@@ -117,7 +109,7 @@ def _power_button(device: str) -> None:
         device - device of event
     '''
 
-    if device != _valid_power_button:
+    if device != cfg.power_button:
         return
 
     try:
@@ -170,7 +162,7 @@ def _direction_pad(device: str) -> None:
 # Functions
 ##########################################################################################
 
-def handle_event(lg: Logger, action: str, device: str, identifier: str) -> int:
+def handle_event(lg: Logger, cfg: ActionConfig, action: str, device: str, identifier: str) -> int:
     '''
     Generic button handling function.
 
@@ -183,11 +175,11 @@ def handle_event(lg: Logger, action: str, device: str, identifier: str) -> int:
 
     try:
         if action == 'power':
-            _power_button(device)
+            _power_button(cfg, device)
         elif action == 'sleep':
-            _sleep_button(device)
+            _sleep_button(cfg, device)
         elif action == 'lid':
-            _lid_button(device, identifier)
+            _lid_button(cfg, device, identifier)
         elif action in ('volumedown', 'volumeup'):
             _volume_button(device, identifier)
         elif action in ('up', 'down', 'left', 'right'):
