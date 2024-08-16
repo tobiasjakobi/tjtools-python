@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 
@@ -6,25 +5,15 @@
 # Imports
 ##########################################################################################
 
-import sys
-
 from logging.handlers import SysLogHandler
 from logging import getLogger
-from pathlib import Path
 
-'''
-All handlers are located here.
-'''
-actions_path = Path(__file__).parent / 'actions'
-
-sys.path.append(actions_path.as_posix())
-
-from ac_adapter import handle_event as handle_ac_adapter
-from battery import handle_event as handle_battery
-from button import handle_event as handle_button
-from jack import handle_event as handle_jack
-from thermal_zone import handle_event as handle_thermal_zone
-from video import handle_event as handle_video
+from tjtools.acpi_actions.ac_adapter import handle_event as handle_ac_adapter
+from tjtools.acpi_actions.battery import handle_event as handle_battery
+from tjtools.acpi_actions.button import handle_event as handle_button
+from tjtools.acpi_actions.jack import handle_event as handle_jack
+from tjtools.acpi_actions.thermal_zone import handle_event as handle_thermal_zone
+from tjtools.acpi_actions.video import handle_event as handle_video
 
 
 ##########################################################################################
@@ -98,6 +87,3 @@ def main(args: list[str]) -> int:
         return 2
 
     return 0
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv))

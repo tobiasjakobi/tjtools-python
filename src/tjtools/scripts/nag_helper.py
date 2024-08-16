@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-2.0
 
 
 ##########################################################################################
@@ -238,7 +238,3 @@ def main(args: list[str]) -> int:
         return 4
 
     return 0
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv))
-

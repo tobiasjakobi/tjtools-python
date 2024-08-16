@@ -23,10 +23,15 @@ classifiers = [
 ]
 
 [project.scripts]
+acpi_action = "tjtools.scripts:acpi_action_cli"
 backup_manage = "tjtools.scripts:backup_manage_cli"
+blank_screen = "tjtools.scripts:blank_screen_cli"
+brightness = "tjtools.scripts:brightness_cli"
 clean_bashhistory = "tjtools.scripts:clean_bashhistory_cli"
 cpufreq_perf = "tjtools.scripts:cpufreq_perf_cli"
+nag_helper = "tjtools.scripts:nag_helper_cli"
 razer_config = "tjtools.scripts:razer_config_cli"
+touchpad_control = "tjtools.scripts:touchpad_control_cli"
 zstd_simple = "tjtools.scripts:zstd_simple_cli"
 
 [project.urls]

@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-2.0
 
 
 ##########################################################################################
@@ -8,14 +8,10 @@
 
 import sys
 
-from ctypes import CDLL, POINTER, c_uint32
-
 from os import getuid
-from pathlib import Path
 from pwd import getpwnam
 
 from i3ipc import Connection as I3Connection
-
 from tjtools.common_helpers import get_active_user, get_sway_ipc
 
 
@@ -105,6 +101,3 @@ def main(args: list[str]) -> int:
         return 1
 
     return 0
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv))

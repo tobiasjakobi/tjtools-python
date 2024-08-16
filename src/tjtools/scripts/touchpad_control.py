@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-2.0
 
 
 ##########################################################################################
@@ -14,7 +14,6 @@ from pathlib import Path
 from subprocess import run as prun
 
 from i3ipc import Connection as I3Connection
-
 from tjtools.common_helpers import get_active_user, get_sway_ipc
 
 
@@ -183,6 +182,3 @@ def main(args: list[str]) -> int:
             return 4
 
     return 0
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv))
