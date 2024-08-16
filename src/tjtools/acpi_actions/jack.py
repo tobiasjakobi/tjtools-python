@@ -19,7 +19,6 @@ _log_prefix = f'ACPI: {_subsystem}: '
 
 _iconbase = 'Adwaita/symbolic/devices'
 _notify_user = 'liquid'
-_notify_wrapper = '/usr/bin/notify_wrapper'
 
 
 ##########################################################################################
@@ -39,7 +38,7 @@ def _exec_notify(source: str, msg: str, icon: str) -> None:
     full_msg = f'Status: {msg}ged'
     full_icon = f'{_iconbase}/{icon}-symbolic.svg'
 
-    p_args = ('sudo', f'--user={_notify_user}', _notify_wrapper, source, full_msg, full_icon)
+    p_args = ('sudo', f'--user={_notify_user}', 'notify_wrapper', source, full_msg, full_icon)
 
     prun(p_args, check=True)
 

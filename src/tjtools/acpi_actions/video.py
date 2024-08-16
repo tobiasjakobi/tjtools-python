@@ -1,18 +1,14 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-2.0
 
 
 ##########################################################################################
 # Imports
 ##########################################################################################
 
-from sys import path as sys_path
-
 from logging import Logger
 
-sys_path.append('/usr/local/bin')
-
-from brightness import modify_state as modify_brightness
+from tjtools.scripts.brightness import modify_state as modify_brightness
 
 
 ##########################################################################################

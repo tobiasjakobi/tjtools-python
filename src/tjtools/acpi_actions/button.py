@@ -1,22 +1,17 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-2.0
 
 
 ##########################################################################################
 # Imports
 ##########################################################################################
 
-from sys import path as sys_path
-
 from logging import Logger
 from pathlib import Path
 from time import time
 
 from dbus import SystemBus, Interface as DBusInterface
-
-sys_path.append('/usr/local/bin')
-
-from blank_screen import blank_screen
+from tjtools.scripts.blank_screen import blank_screen
 
 
 ##########################################################################################

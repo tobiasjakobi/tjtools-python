@@ -1,22 +1,18 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-2.0
 
 
 ##########################################################################################
 # Imports
 ##########################################################################################
 
-from sys import path as sys_path
-
 from logging import Logger
 from pathlib import Path
 from stat import S_IMODE, S_IROTH
 from subprocess import run as prun
 
-sys_path.append('/usr/local/bin')
-
-import brightness
-from sysfs_helper import read_sysfs
+import tjtools.scripts.brightness as brightness
+from tjtools.sysfs_helper import read_sysfs
 
 
 ##########################################################################################
@@ -33,7 +29,6 @@ _valid_ac_adapter = 'ACPI0003:01'
 
 _iconbase = 'Adwaita/symbolic/devices'
 _notify_user = 'liquid'
-_notify_wrapper = '/usr/bin/notify_wrapper'
 
 
 ##########################################################################################
@@ -77,7 +72,7 @@ def _exec_notify(msg: str) -> None:
     full_msg = f'Status: {msg}'
     icon = f'{_iconbase}/ac-adapter-symbolic.svg'
 
-    p_args = ('sudo', f'--user={_notify_user}', _notify_wrapper, _subsystem, full_msg, icon)
+    p_args = ('sudo', f'--user={_notify_user}', 'notify_wrapper', _subsystem, full_msg, icon)
 
     prun(p_args, check=True)
 
