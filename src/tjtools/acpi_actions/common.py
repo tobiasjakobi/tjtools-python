@@ -80,13 +80,13 @@ class ActionConfig:
         sleep_button = config_data['sleep-button']
         lid_button = config_data['lid-button']
 
-        for val in (notify_user, ac_adapter_sysfs, ac_adapter_device, battery_device, power_button, sleep_button, lid_button):
-            if not isinstance(val, str):
-                raise RuntimeError(f'invalid string value: {val}')
+        for string_val in (notify_user, ac_adapter_sysfs, ac_adapter_device, battery_device, power_button, sleep_button, lid_button):
+            if not isinstance(string_val, str):
+                raise RuntimeError(f'invalid string value: {string_val}')
 
         brightness_modifier = config_data['brightness-modifier']
 
-        if not isinstance(brightness_modifier, int) or val <= 0:
+        if not isinstance(brightness_modifier, int) or brightness_modifier <= 0:
             raise RuntimeError(f'invalid modifer value: {brightness_modifier}')
 
         return ActionConfig(
