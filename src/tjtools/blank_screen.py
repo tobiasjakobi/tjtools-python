@@ -12,7 +12,7 @@ from os import getuid
 from pwd import getpwnam
 
 from i3ipc import Connection as I3Connection
-from tjtools.common_helpers import get_active_user, get_sway_ipc
+from .common_helpers import get_active_user, get_sway_ipc
 
 
 ##########################################################################################
@@ -75,29 +75,3 @@ def blank_screen(username: str) -> None:
 
     if uid is not None:
         _blank_intern(uid)
-
-
-##########################################################################################
-# Main
-##########################################################################################
-
-def main(args: list[str]) -> int:
-    '''
-    Main function.
-
-    Arguments:
-        args - list of string arguments from the CLI
-    '''
-
-    try:
-        if len(args) > 1:
-            blank_screen(args[1])
-        else:
-            _blank_intern(getuid())
-
-    except Exception as exc:
-        print(f'error: failed to blank screen: {exc}', file=sys.stderr)
-
-        return 1
-
-    return 0

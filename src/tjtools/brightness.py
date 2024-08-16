@@ -13,7 +13,7 @@ from logging.handlers import SysLogHandler
 from logging import Logger, getLogger
 from pathlib import Path
 
-from tjtools.sysfs_helper import get_parent_device, read_sysfs, write_sysfs
+from .sysfs_helper import get_parent_device, read_sysfs, write_sysfs
 
 
 ##########################################################################################
@@ -311,3 +311,6 @@ def main(args: list[str]) -> int:
         return 2
 
     return 0
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv))
