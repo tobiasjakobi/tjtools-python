@@ -23,7 +23,7 @@ from time import sleep
 ##########################################################################################
 
 '''
-Path to config file for the sandbox.
+Path to config file for Razer configuration.
 '''
 _config_path = Path('/etc/razer-config.conf')
 
