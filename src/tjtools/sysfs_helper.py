@@ -7,14 +7,14 @@
 # Imports
 ##########################################################################################
 
-from os.path import isfile, islink, join as pjoin
+from pathlib import Path
 
 
 ##########################################################################################
 # Internal functions
 ##########################################################################################
 
-def _is_parent_device(path: str) -> bool:
+def _is_parent_device(path: Path) -> bool:
     '''
     Check if a device path belongs to a parent device.
 
@@ -22,14 +22,9 @@ def _is_parent_device(path: str) -> bool:
         path - the device path to check
     '''
 
-    if not isfile(pjoin(path, 'class')):
-        return False
-
-    if not isfile(pjoin(path, 'vendor')):
-        return False
-
-    if not isfile(pjoin(path, 'device')):
-        return False
+    for arg in ('class', 'vendor', 'device'):
+        if not (path / arg).is_file():
+            return False
 
     return True
 
@@ -38,7 +33,7 @@ def _is_parent_device(path: str) -> bool:
 # Functions
 ##########################################################################################
 
-def get_parent_device(path: str) -> str:
+def get_parent_device(path: Path) -> Path:
     '''
     Get the parent device path for a device.
 
@@ -54,15 +49,15 @@ def get_parent_device(path: str) -> str:
             parent_device = current_path
             break
 
-        next_path = pjoin(current_path, 'device')
-        if not islink(next_path):
+        next_path = current_path / 'device'
+        if not next_path.is_symlink():
             break
 
         current_path = next_path
 
     return parent_device
 
-def read_sysfs(path: str) -> str:
+def read_sysfs(path: Path) -> str:
     '''
     Read from a sysfs path.
 
@@ -72,15 +67,14 @@ def read_sysfs(path: str) -> str:
         path - the path from which to read
     '''
     try:
-        with open(path, mode='r', encoding='utf-8') as f:
-            data = f.read().rstrip()
+        data = path.read_text(encoding='utf-8').rstrip()
 
     except Exception:
         data = None
 
     return data
 
-def write_sysfs(path: str, value: int) -> int:
+def write_sysfs(path: Path, value: int) -> int:
     '''
     Write to a sysfs path.
 
@@ -92,8 +86,7 @@ def write_sysfs(path: str, value: int) -> int:
     '''
 
     try:
-        with open(path, mode='w', encoding='utf-8') as f:
-            f.write(str(value))
+        path.write_text(str(value), encoding='utf-8')
 
     except Exception:
         return 1
