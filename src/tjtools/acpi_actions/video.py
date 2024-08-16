@@ -8,7 +8,7 @@
 
 from logging import Logger
 
-from tjtools.scripts.brightness import modify_state as modify_brightness
+from ..brightness import modify_state as modify_brightness
 
 
 ##########################################################################################

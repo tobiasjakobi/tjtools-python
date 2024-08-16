@@ -13,8 +13,9 @@ from os import environ as os_environ
 from pathlib import Path
 from subprocess import run as prun
 
+from ..common_helpers import get_active_user, get_sway_ipc
+
 from i3ipc import Connection as I3Connection
-from tjtools.common_helpers import get_active_user, get_sway_ipc
 
 
 ##########################################################################################

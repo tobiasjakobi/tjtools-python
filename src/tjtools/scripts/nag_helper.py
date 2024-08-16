@@ -6,14 +6,14 @@
 # Imports
 ##########################################################################################
 
+import sys
+
 from argparse import ArgumentParser
 from json import loads as jloads
 from subprocess import run as prun
 
 from dbus import SystemBus, Interface as DBusInterface
 from dbus.exceptions import DBusException
-
-import sys
 
 
 ##########################################################################################

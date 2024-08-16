@@ -6,9 +6,6 @@
 # Imports
 ##########################################################################################
 
-import sys
-
-from os import getuid
 from pwd import getpwnam
 
 from i3ipc import Connection as I3Connection

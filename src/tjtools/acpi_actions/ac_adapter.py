@@ -11,8 +11,8 @@ from pathlib import Path
 from stat import S_IMODE, S_IROTH
 from subprocess import run as prun
 
-import tjtools.scripts.brightness as brightness
-from tjtools.sysfs_helper import read_sysfs
+from .. import brightness
+from ..sysfs_helper import read_sysfs
 
 
 ##########################################################################################

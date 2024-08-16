@@ -8,12 +8,12 @@
 from logging.handlers import SysLogHandler
 from logging import getLogger
 
-from tjtools.acpi_actions.ac_adapter import handle_event as handle_ac_adapter
-from tjtools.acpi_actions.battery import handle_event as handle_battery
-from tjtools.acpi_actions.button import handle_event as handle_button
-from tjtools.acpi_actions.jack import handle_event as handle_jack
-from tjtools.acpi_actions.thermal_zone import handle_event as handle_thermal_zone
-from tjtools.acpi_actions.video import handle_event as handle_video
+from ..acpi_actions.ac_adapter import handle_event as handle_ac_adapter
+from ..acpi_actions.battery import handle_event as handle_battery
+from ..acpi_actions.button import handle_event as handle_button
+from ..acpi_actions.jack import handle_event as handle_jack
+from ..acpi_actions.thermal_zone import handle_event as handle_thermal_zone
+from ..acpi_actions.video import handle_event as handle_video
 
 
 ##########################################################################################

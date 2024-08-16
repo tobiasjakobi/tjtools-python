@@ -10,8 +10,9 @@ from logging import Logger
 from pathlib import Path
 from time import time
 
+from ..blank_screen import blank_screen
+
 from dbus import SystemBus, Interface as DBusInterface
-from tjtools.scripts.blank_screen import blank_screen
 
 
 ##########################################################################################
