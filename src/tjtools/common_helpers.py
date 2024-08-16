@@ -57,7 +57,6 @@ def get_active_user() -> int:
 
     return user_id.value
 
-
 def get_sway_ipc(uid: int) -> Path:
     '''
     Get path to the Sway IPC socket of a given user.

@@ -8,7 +8,6 @@
 
 from argparse import ArgumentParser
 from json import loads as jloads
-from pathlib import Path
 from subprocess import run as prun
 
 from dbus import SystemBus, Interface as DBusInterface
@@ -91,9 +90,7 @@ def _make_button(profile: str) -> tuple[str]:
         profile - CPU powerlimit to use
     '''
 
-    nag_helper = Path(__file__).as_posix();
-
-    return ('--button-dismiss-no-terminal', f'Set {profile}', f'{nag_helper} --profile-select={profile}')
+    return ('--button-dismiss-no-terminal', f'Set {profile}', f'nag_helper --profile-select={profile}')
 
 
 ##########################################################################################
@@ -145,7 +142,7 @@ def nag_cpu_powerlimit() -> None:
         raise RuntimeError(f'invalid active profile: {active_profile}')
 
     p_args = (
-        '/usr/bin/swaynag',
+        'swaynag',
         '--type', 'warning',
         '--message', state_msg,
         *buttons
@@ -158,7 +155,7 @@ def nag_rfkill() -> None:
     Display a nag message for WiFi rfkill selection.
     '''
 
-    p_args = ('/usr/bin/rfkill', '--json')
+    p_args = ('rfkill', '--json')
 
     p = prun(p_args, check=True, capture_output=True, encoding='utf-8')
 
@@ -179,10 +176,10 @@ def nag_rfkill() -> None:
         button_msg = 'Switch radio on'
 
     p_args = (
-        '/usr/bin/swaynag',
+        'swaynag',
         '--type', 'warning',
         '--message', state_msg,
-        '--button-dismiss-no-terminal', button_msg, f'/usr/bin/rfkill toggle {_rfkill_type}',
+        '--button-dismiss-no-terminal', button_msg, f'rfkill toggle {_rfkill_type}',
     )
 
     prun(p_args, check=True, capture_output=True)
