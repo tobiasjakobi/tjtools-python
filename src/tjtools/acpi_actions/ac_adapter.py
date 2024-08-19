@@ -131,15 +131,22 @@ def handle_event(lg: Logger, cfg: ActionConfig, device: str, identifier: str) ->
     if state == 0:
         msg = 'unplugged'
 
-        brctl = BrightnessControl()
-        brctl.save_state()
-        brctl.set_powersave()
+        try:
+            brctl = BrightnessControl()
+            brctl.save_state()
+            brctl.set_powersave()
+
+        except Exception as exc:
+            lg.error(_log_prefix + f'failed to save and set powersave: {exc}')
     elif state == 1:
         msg = 'plugged in'
 
-        brctl = BrightnessControl()
-        brctl.save_state()
-        brctl.restore_state()
+        try:
+            brctl = BrightnessControl()
+            brctl.restore_state()
+
+        except Exception as exc:
+            lg.error(_log_prefix + f'failed to restore: {exc}')
     else:
         lg.error(_log_prefix + f'unknown adapter state: {state}')
 
