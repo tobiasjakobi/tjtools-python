@@ -12,14 +12,6 @@ def backup_manage_cli() -> int:
     from .backup_manage import main as cli_main
     return cli_main(sys_argv)
 
-def blank_screen_cli() -> int:
-    from .blank_screen import main as cli_main
-    return cli_main(sys_argv)
-
-def brightness_cli() -> int:
-    from .brightness import main as cli_main
-    return cli_main(sys_argv)
-
 def clean_bashhistory_cli() -> int:
     from .clean_bashhistory import main as cli_main
     return cli_main(sys_argv)
