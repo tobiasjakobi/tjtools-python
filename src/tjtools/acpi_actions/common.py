@@ -9,9 +9,67 @@ from __future__ import annotations
 # Imports
 ##########################################################################################
 
+from ctypes import addressof, c_uint8, c_int32, memmove, sizeof, Structure
 from dataclasses import dataclass
+from enum import IntEnum
 from json import loads as jloads
 from pathlib import Path
+from socket import socket, AF_UNIX, SOCK_DGRAM
+
+
+##########################################################################################
+# Constants
+##########################################################################################
+
+_config_path = Path('/etc/brightness-daemon.conf')
+
+
+##########################################################################################
+# Enumerator definitions
+##########################################################################################
+
+class CommandType(IntEnum):
+    SetState     = 0
+    ModifyState  = 1
+    SaveState    = 2
+    RestoreState = 3
+    SetPowersave = 4
+
+
+##########################################################################################
+# C-structs
+##########################################################################################
+
+class ModifyStateFrame(Structure):
+    _pack_ = 1
+    _fields_ = (
+        ('type', c_uint8),
+        ('len', c_uint8),
+        ('value', c_int32),
+    )
+
+    def serialize(self) -> bytearray:
+        self_size = sizeof(ModifyStateFrame)
+        buf = (c_uint8 * self_size)()
+
+        memmove(addressof(buf), addressof(self), self_size)
+
+        return bytearray(buf)
+
+class SimpleCommandFrame(Structure):
+    _pack_ = 1
+    _fields_ = (
+        ('type', c_uint8),
+        ('len', c_uint8),
+    )
+
+    def serialize(self) -> bytearray:
+        self_size = sizeof(ModifyStateFrame)
+        buf = (c_uint8 * self_size)()
+
+        memmove(addressof(buf), addressof(self), self_size)
+
+        return bytearray(buf)
 
 
 ##########################################################################################
@@ -99,3 +157,74 @@ class ActionConfig:
             lid_button,
             brightness_modifier
         )
+
+
+##########################################################################################
+# Class definitions
+##########################################################################################
+
+class BrightnessControl:
+    def _simple_command(self, cmd_type: CommandType) -> None:
+        '''
+        Execute a simple brightness control command.
+
+        Arguments:
+            cmd_type - type of the command
+
+        Simple commands have a length of zero.
+        '''
+
+        if self.client is None:
+            return
+
+        frame = SimpleCommandFrame()
+
+        frame.type = cmd_type
+        frame.len  = 0
+
+        self.client.sendall(frame.serialize())
+
+    def __init__(self):
+        '''
+        Constructor.
+        '''
+
+        config_data = jloads(_config_path.read_text(encoding='utf8'))
+
+        self.client = None
+
+        socket_path = config_data.get('socket-path')
+        if socket_path is None or not Path(socket_path).is_socket():
+            return
+
+        self.client = socket(AF_UNIX, SOCK_DGRAM)
+
+        self.client.connect(socket_path)
+
+    def modify_brightness(self, value: int) -> None:
+        '''
+        Modify the backlight brightness.
+
+        Arguments:
+            value - signed value to apply to current brightness
+        '''
+
+        if self.client is None:
+            return
+
+        frame = ModifyStateFrame()
+
+        frame.type  = CommandType.ModifyState
+        frame.len   = 4
+        frame.value = value
+
+        self.client.sendall(frame.serialize())
+
+    def save_state(self) -> None:
+        self._simple_command(CommandType.SaveState)
+
+    def restore_state(self) -> None:
+        self._simple_command(CommandType.RestoreState)
+
+    def set_powersave(self) -> None:
+        self._simple_command(CommandType.SetPowersave)

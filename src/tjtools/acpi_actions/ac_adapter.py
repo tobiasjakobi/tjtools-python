@@ -11,9 +11,8 @@ from pathlib import Path
 from stat import S_IMODE, S_IROTH
 from subprocess import run as prun
 
-from .. import brightness
 from ..sysfs_helper import read_sysfs
-from .common import ActionConfig
+from .common import ActionConfig, BrightnessControl
 
 
 ##########################################################################################
@@ -132,12 +131,15 @@ def handle_event(lg: Logger, cfg: ActionConfig, device: str, identifier: str) ->
     if state == 0:
         msg = 'unplugged'
 
-        brightness.save_state(lg)
-        brightness.set_powersave(lg)
+        brctl = BrightnessControl()
+        brctl.save_state()
+        brctl.set_powersave()
     elif state == 1:
         msg = 'plugged in'
 
-        brightness.restore_state(lg)
+        brctl = BrightnessControl()
+        brctl.save_state()
+        brctl.restore_state()
     else:
         lg.error(_log_prefix + f'unknown adapter state: {state}')
 
