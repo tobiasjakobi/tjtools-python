@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-2.0
 
 
 ##########################################################################################
@@ -7,8 +7,6 @@
 ##########################################################################################
 
 import sys
-
-from pathlib import Path
 
 from i3ipc import Connection as I3Connection
 
@@ -44,6 +42,13 @@ def _output_power(state: bool) -> None:
 ##########################################################################################
 
 def main(args: list[str]) -> int:
+    '''
+    Main function.
+
+    Arguments:
+        args - list of string arguments from the CLI
+    '''
+
     if len(args) < 2:
         _usage(args[0])
         return 1
