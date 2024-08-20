@@ -20,6 +20,10 @@ def cpufreq_perf_cli() -> int:
     from .cpufreq_perf import main as cli_main
     return cli_main(sys_argv)
 
+def greeter_idle_cli() -> int:
+    from .greeter_idle import main as cli_main
+    return cli_main(sys_argv)
+
 def nag_helper_cli() -> int:
     from .nag_helper import main as cli_main
     return cli_main(sys_argv)
