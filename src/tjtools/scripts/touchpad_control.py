@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: GPL-2.0
 
 
+from __future__ import annotations
+
+
 ##########################################################################################
 # Imports
 ##########################################################################################
@@ -9,6 +12,8 @@
 import sys
 
 from argparse import ArgumentParser
+from dataclasses import dataclass
+from json import loads as jloads
 from os import environ as os_environ
 from pathlib import Path
 from subprocess import run as prun
@@ -23,17 +28,9 @@ from i3ipc import Connection as I3Connection
 ##########################################################################################
 
 '''
-Identifier of the touchpad device in Sway.
+Path to config file for touchpad control configuration.
 '''
-_touch_identifier = '1155:21156:usb_AYANEO_USB_MOUSE'
-
-'''
-USB mouse identifiers that trigger a touchpad disable.
-'''
-_usb_mouse_identifiers = (
-    'Logitech_USB_Laser_Mouse',
-    'Razer_Razer_DeathAdder_V2',
-)
+_config_path = Path('/etc/touchpad-control.conf')
 
 '''
 Template to construct input device nodes.
@@ -42,10 +39,60 @@ _input_node_template = '/dev/input/by-id/usb-{0}-event-mouse'
 
 
 ##########################################################################################
+# Dataclass definitions
+##########################################################################################
+
+@dataclass(frozen=True)
+class TouchpadConfig:
+    '''
+    Dataclass encoding the touchpad control configuration.
+
+    touchpad_identifier   - Identifier of the touchpad device in Sway
+    usb_mouse_identifiers - USB mouse identifiers that trigger a touchpad disable
+    '''
+
+    touchpad_identifier: str
+    usb_mouse_identifiers: list[str]
+
+    @staticmethod
+    def from_path(path: Path) -> TouchpadConfig:
+        '''
+        Create a touchpad config from a config path.
+
+        Arguments:
+            path - path from where we read the config
+        '''
+
+        if not path.is_file():
+            raise RuntimeError(f'config path is not a file: {path}')
+
+        config_raw = path.read_text(encoding='utf-8')
+        config_data = jloads(config_raw)
+
+        for entry in ('touchpad-identifier', 'usb-mouse-identifiers'):
+            if not entry in config_data:
+                raise RuntimeError(f'config entry missing: {entry}')
+
+        touchpad_identifier = config_data['touchpad-identifier']
+        if not isinstance(touchpad_identifier, str):
+            raise RuntimeError(f'invalid touchpad identifier type: {type(touchpad_identifier)}')
+
+        usb_mouse_identifiers = config_data['usb-mouse-identifiers']
+        if not isinstance(usb_mouse_identifiers, list):
+            raise RuntimeError(f'invalid USB mouse identifiers type: {type(usb_mouse_identifiers)}')
+
+        for ident in usb_mouse_identifiers:
+            if not isinstance(ident, str):
+                raise RuntimeError(f'invalid identifier entry type: {type(ident)}')
+
+        return TouchpadConfig(touchpad_identifier, usb_mouse_identifiers)
+
+
+##########################################################################################
 # Internal functions
 ##########################################################################################
 
-def _internal_ctrl(command: str) -> None:
+def _internal_ctrl(cfg: TouchpadConfig, command: str) -> None:
     '''
     Internal control helper.
 
@@ -63,7 +110,7 @@ def _internal_ctrl(command: str) -> None:
 
     conn = I3Connection(socket_path=ipc_socket.as_posix())
 
-    replies = conn.command(f'input {_touch_identifier} events {command}')
+    replies = conn.command(f'input {cfg.touch_identifier} events {command}')
     if len(replies) != 1:
         raise RuntimeError('malformed IPC reply')
 
@@ -84,14 +131,14 @@ def _internal_ctrl(command: str) -> None:
 # Functions
 ##########################################################################################
 
-def touchpad_auto() -> None:
+def touchpad_auto(cfg: TouchpadConfig) -> None:
     '''
     Perform auto-configuration of touchpad.
     '''
 
     command = 'enabled'
 
-    for id in _usb_mouse_identifiers:
+    for id in cfg.usb_mouse_identifiers:
         path = Path(_input_node_template.format(id))
 
         if path.exists():
@@ -100,7 +147,7 @@ def touchpad_auto() -> None:
 
     _internal_ctrl(command)
 
-def touchpad_udev(usb_interface: str) -> None:
+def touchpad_udev(cfg: TouchpadConfig, usb_interface: str) -> None:
     '''
     Handle a UDev event of the touchpad.
 
@@ -132,7 +179,7 @@ def touchpad_udev(usb_interface: str) -> None:
         if iface != 0:
             return
 
-    _internal_ctrl(command)
+    _internal_ctrl(cfg, command)
 
 
 ##########################################################################################
@@ -159,27 +206,35 @@ def main(args: list[str]) -> int:
 
         return 1
 
+    try:
+        config = TouchpadConfig.from_path(_config_path)
+
+    except Exception as exc:
+        print(f'error: valid to read config from path: {_config_path}: {exc}', file=sys.stderr)
+
+        return 2
+
     if parsed_args.mode == 'auto':
         try:
-            touchpad_auto()
+            touchpad_auto(config)
 
         except Exception as exc:
             print(f'error: failed to auto-configure touchpad: {exc}', file=sys.stderr)
 
-            return 2
+            return 3
 
     elif parsed_args.mode == 'udev':
         if parsed_args.usb_interface is None:
             print('error: missing USB interface argument', file=sys.stderr)
 
-            return 3
+            return 4
 
         try:
-            touchpad_udev(parsed_args.usb_interface)
+            touchpad_udev(config, parsed_args.usb_interface)
 
         except Exception as exc:
             print(f'error: failed to handle touchpad UDev event: {exc}', file=sys.stderr)
 
-            return 4
+            return 5
 
     return 0
