@@ -36,6 +36,14 @@ def openvpn_netns_cli() -> int:
     from .openvpn_netns import main as cli_main
     return cli_main(sys_argv)
 
+def playmedia_cli() -> int:
+    from .playmedia import main as cli_main
+    return cli_main(sys_argv)
+
+def pulseserver_wrap_cli() -> int:
+    from .pulseserver_wrap import main as cli_main
+    return cli_main(sys_argv)
+
 def razer_config_cli() -> int:
     from .razer_config import main as cli_main
     return cli_main(sys_argv)
