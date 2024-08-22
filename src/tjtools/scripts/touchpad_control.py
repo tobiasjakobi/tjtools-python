@@ -74,7 +74,7 @@ class TouchpadConfig:
                 raise RuntimeError(f'config entry missing: {entry}')
 
         touchpad_identifier = config_data['touchpad-identifier']
-        if not isinstance(touchpad_identifier, str):
+        if not isinstance(touchpad_identifier, str) and touchpad_identifier is not None:
             raise RuntimeError(f'invalid touchpad identifier type: {type(touchpad_identifier)}')
 
         usb_mouse_identifiers = config_data['usb-mouse-identifiers']
@@ -100,6 +100,9 @@ def _internal_ctrl(cfg: TouchpadConfig, command: str) -> None:
         command - command to execute
     '''
 
+    if cfg.touchpad_identifier is None:
+        return
+
     user_id = get_active_user()
     if user_id is None:
         return
@@ -110,7 +113,7 @@ def _internal_ctrl(cfg: TouchpadConfig, command: str) -> None:
 
     conn = I3Connection(socket_path=ipc_socket.as_posix())
 
-    replies = conn.command(f'input {cfg.touch_identifier} events {command}')
+    replies = conn.command(f'input {cfg.touchpad_identifier} events {command}')
     if len(replies) != 1:
         raise RuntimeError('malformed IPC reply')
 
@@ -145,7 +148,7 @@ def touchpad_auto(cfg: TouchpadConfig) -> None:
             command = 'disabled'
             break
 
-    _internal_ctrl(command)
+    _internal_ctrl(cfg, command)
 
 def touchpad_udev(cfg: TouchpadConfig, usb_interface: str) -> None:
     '''
