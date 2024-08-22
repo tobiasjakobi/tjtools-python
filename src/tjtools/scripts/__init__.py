@@ -20,6 +20,10 @@ def cpufreq_perf_cli() -> int:
     from .cpufreq_perf import main as cli_main
     return cli_main(sys_argv)
 
+def gentoo_sandbox_cli() -> int:
+    from .gentoo_sandbox import main as cli_main
+    return cli_main(sys_argv)
+
 def greeter_idle_cli() -> int:
     from .greeter_idle import main as cli_main
     return cli_main(sys_argv)
