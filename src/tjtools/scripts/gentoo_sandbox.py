@@ -19,8 +19,6 @@ Set LIBMOUNT_DEBUG=debug to get a list of debug options.
 
 import sys
 
-sys.path.append('/etc/openvpn/client')
-
 from dataclasses import dataclass
 from enum import IntFlag
 from functools import partial
@@ -31,11 +29,9 @@ from subprocess import CalledProcessError, run as prun
 from time import sleep
 from typing import Any
 
-
 from systemd.daemon import notify as system_notify
 from libmount import MS_BIND, MS_REC, MS_SLAVE, Context as MountContext
-
-from netns import get_ns_identifier, is_ns_live
+from tjtools.scripts.openvpn_netns import get_ns_identifier, is_ns_live
 
 
 ##########################################################################################

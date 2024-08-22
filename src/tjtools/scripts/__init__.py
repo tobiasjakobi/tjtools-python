@@ -32,6 +32,10 @@ def nag_helper_cli() -> int:
     from .nag_helper import main as cli_main
     return cli_main(sys_argv)
 
+def openvpn_netns_cli() -> int:
+    from .openvpn_netns import main as cli_main
+    return cli_main(sys_argv)
+
 def razer_config_cli() -> int:
     from .razer_config import main as cli_main
     return cli_main(sys_argv)
