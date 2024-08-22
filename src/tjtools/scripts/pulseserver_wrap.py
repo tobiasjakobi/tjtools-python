@@ -27,8 +27,7 @@ from time import time
 
 _pulseaudio_tcp_port = 4713
 _config_path_template = Path('~/.config/pulseserver_wrap.conf')
-_flatpak_args_template = ('/usr/bin/flatpak', 'run', '--branch=stable', '--arch=x86_64', '--filesystem=home', '--command={0}')
-_env_helper_template = Path('~/local/bin/flatpak_env_helper.sh')
+_flatpak_args_template = ('flatpak', 'run', '--branch=stable', '--arch=x86_64', '--filesystem=home', '--command={0}')
 _logfile_template = Path('~/local/log')
 _pulsefake_template = Path('~/local/pulsefake')
 
@@ -296,10 +295,8 @@ def pulseserver_wrap(config_args: ConfigArguments) -> None:
     if config_args.flatpak:
         print('info: flatpak mode enabled', file=sys.stdout)
 
-        env_helper = _env_helper_template.expanduser()
-
         logfile_base = 'flatpak'
-        real_args = _make_flatpak_args(env_helper) + real_args
+        real_args = _make_flatpak_args('flatpak_env_helper.sh') + real_args
 
     else:
         logfile_base = Path(real_args[0]).name
