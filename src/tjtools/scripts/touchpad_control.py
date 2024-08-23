@@ -199,7 +199,7 @@ def main(args: list[str]) -> int:
 
     parser = ArgumentParser()
 
-    parser.add_argument('-m', '--mode', choices=('auto', 'udev'), help='Operation mode')
+    parser.add_argument('-m', '--mode', required=True, choices=('auto', 'udev'), help='Operation mode')
     parser.add_argument('-u', '--usb-interface', help='USB interface number for UDev mode')
 
     parsed_args = parser.parse_args(args[1:])
