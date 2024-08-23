@@ -48,6 +48,18 @@ def razer_config_cli() -> int:
     from .razer_config import main as cli_main
     return cli_main(sys_argv)
 
+def stdcompress_cli() -> int:
+    from .stdcompress import main as cli_main
+    return cli_main(sys_argv)
+
+def strip_utf8bom_cli() -> int:
+    from .strip_utf8bom import main as cli_main
+    return cli_main(sys_argv)
+
+def swayshot_cli() -> int:
+    from .swayshot import main as cli_main
+    return cli_main(sys_argv)
+
 def touchpad_control_cli() -> int:
     from .touchpad_control import main as cli_main
     return cli_main(sys_argv)
