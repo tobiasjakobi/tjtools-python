@@ -51,6 +51,7 @@ def main(args: list[str]) -> int:
 
     if len(args) < 2:
         _usage(args[0])
+
         return 1
 
     cmd = args[1]
