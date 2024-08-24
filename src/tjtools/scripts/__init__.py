@@ -12,6 +12,10 @@ def backup_manage_cli() -> int:
     from .backup_manage import main as cli_main
     return cli_main(sys_argv)
 
+def checksum_cli() -> int:
+    from .checksum import main as cli_main
+    return cli_main(sys_argv)
+
 def clean_bashhistory_cli() -> int:
     from .clean_bashhistory import main as cli_main
     return cli_main(sys_argv)
@@ -26,6 +30,10 @@ def gentoo_sandbox_cli() -> int:
 
 def greeter_idle_cli() -> int:
     from .greeter_idle import main as cli_main
+    return cli_main(sys_argv)
+
+def mpv_ipc_cli() -> int:
+    from .mpv_ipc import main as cli_main
     return cli_main(sys_argv)
 
 def nag_helper_cli() -> int:

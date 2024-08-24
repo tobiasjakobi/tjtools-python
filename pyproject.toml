@@ -13,7 +13,9 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
   "dbus-python>1.3.0",
+  "eyed3>0.9.7",
   "i3ipc>2.2.0",
+  "mutagen>1.47.0",
   "systemd-python>234",
 ]
 classifiers = [
@@ -25,12 +27,14 @@ classifiers = [
 [project.scripts]
 acpi_action = "tjtools.scripts:acpi_action_cli"
 backup_manage = "tjtools.scripts:backup_manage_cli"
+checksum = "tjtools.scripts:checksum_cli"
 blank_screen = "tjtools.scripts:blank_screen_cli"
 brightness = "tjtools.scripts:brightness_cli"
 clean_bashhistory = "tjtools.scripts:clean_bashhistory_cli"
 cpufreq_perf = "tjtools.scripts:cpufreq_perf_cli"
 gentoo_sandbox = "tjtools.scripts:gentoo_sandbox_cli"
 greeter_idle = "tjtools.scripts:greeter_idle_cli"
+mpv_ipc = "tjtools.scripts:mpv_ipc_cli"
 nag_helper = "tjtools.scripts:nag_helper_cli"
 openvpn_netns = "tjtools.scripts:openvpn_netns_cli"
 playmedia = "tjtools.scripts:playmedia_cli"
