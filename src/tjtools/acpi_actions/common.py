@@ -85,6 +85,7 @@ class ActionConfig:
     ac_adapter_sysfs    - sysfs name of the AC adapter
     ac_adapter_device   - ACPI device name of the AC adapter
     battery_device      - ACPI device name of the battery
+    wmi_device          - ACPI device name of the WMI
     power_button        - ACPI device name of the power button
     sleep_button        - ACPI device name of the sleep button
     lid_button          - ACPI device name of the lid button
@@ -95,6 +96,7 @@ class ActionConfig:
     ac_adapter_sysfs: str
     ac_adapter_device: str
     battery_device: str
+    wmi_device: str
     power_button: str
     sleep_button: str
     lid_button: str
@@ -105,6 +107,7 @@ class ActionConfig:
         'ac-adapter-sysfs',
         'ac-adapter-device',
         'battery-device',
+        'wmi-device',
         'power-button',
         'sleep-button',
         'lid-button',
@@ -134,6 +137,7 @@ class ActionConfig:
         ac_adapter_sysfs = config_data['ac-adapter-sysfs']
         ac_adapter_device = config_data['ac-adapter-device']
         battery_device = config_data['battery-device']
+        wmi_device = config_data['wmi-device']
         power_button = config_data['power-button']
         sleep_button = config_data['sleep-button']
         lid_button = config_data['lid-button']
