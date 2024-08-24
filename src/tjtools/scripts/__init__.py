@@ -48,6 +48,22 @@ def razer_config_cli() -> int:
     from .razer_config import main as cli_main
     return cli_main(sys_argv)
 
+def rename_vfat_cli() -> int:
+    from .rename_vfat import main as cli_main
+    return cli_main(sys_argv)
+
+def rifle_cmd_cli() -> int:
+    from .rifle_cmd import main as cli_main
+    return cli_main(sys_argv)
+
+def rifle_monitor_cli() -> int:
+    from .rifle_monitor import main as cli_main
+    return cli_main(sys_argv)
+
+def sshpipe_cli() -> int:
+    from .sshpipe import main as cli_main
+    return cli_main(sys_argv)
+
 def stdcompress_cli() -> int:
     from .stdcompress import main as cli_main
     return cli_main(sys_argv)
@@ -66,6 +82,14 @@ def swayshot_cli() -> int:
 
 def touchpad_control_cli() -> int:
     from .touchpad_control import main as cli_main
+    return cli_main(sys_argv)
+
+def waybar_cmus_cli() -> int:
+    from .waybar_cmus import main as cli_main
+    return cli_main(sys_argv)
+
+def waybar_musicpd_cli() -> int:
+    from .waybar_musicpd import main as cli_main
     return cli_main(sys_argv)
 
 def zstd_simple_cli() -> int:
