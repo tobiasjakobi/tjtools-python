@@ -56,6 +56,10 @@ def strip_utf8bom_cli() -> int:
     from .strip_utf8bom import main as cli_main
     return cli_main(sys_argv)
 
+def sway_idle_cli() -> int:
+    from .sway_idle import main as cli_main
+    return cli_main(sys_argv)
+
 def swayshot_cli() -> int:
     from .swayshot import main as cli_main
     return cli_main(sys_argv)
