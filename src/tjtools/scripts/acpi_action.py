@@ -17,6 +17,7 @@ from ..acpi_actions.button import handle_event as handle_button
 from ..acpi_actions.jack import handle_event as handle_jack
 from ..acpi_actions.thermal_zone import handle_event as handle_thermal_zone
 from ..acpi_actions.video import handle_event as handle_video
+from ..acpi_actions.wmi import handle_event as handle_wmi
 
 
 ##########################################################################################
@@ -91,6 +92,8 @@ def main(args: list[str]) -> int:
         ret = handle_thermal_zone(lg, config, action, device, identifier, value)
     elif group == 'video':
         ret = handle_video(lg, config, action, device)
+    elif group == 'wmi':
+        ret = handle_wmi(lg, action, device, identifier, value)
     else:
         lg.error(_log_prefix + f'received event for unknown group: {group}')
         lg.error(_log_prefix + f'event description: action={action}, device={device}, identifier={identifier}, value={value}')
