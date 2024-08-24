@@ -142,7 +142,18 @@ class ActionConfig:
         sleep_button = config_data['sleep-button']
         lid_button = config_data['lid-button']
 
-        for string_val in (notify_user, ac_adapter_sysfs, ac_adapter_device, battery_device, power_button, sleep_button, lid_button):
+        string_values = (
+            notify_user,
+            ac_adapter_sysfs,
+            ac_adapter_device,
+            battery_device,
+            wmi_device,
+            power_button,
+            sleep_button,
+            lid_button,
+        )
+
+        for string_val in string_values:
             if not isinstance(string_val, str) and string_val is not None:
                 raise RuntimeError(f'invalid string value: {string_val}')
 
@@ -156,6 +167,7 @@ class ActionConfig:
             ac_adapter_sysfs,
             ac_adapter_device,
             battery_device,
+            wmi_device,
             power_button,
             sleep_button,
             lid_button,
