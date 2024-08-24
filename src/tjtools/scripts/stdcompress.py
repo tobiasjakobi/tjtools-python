@@ -46,8 +46,9 @@ def main(args: list[str]) -> int:
 
         return 0
 
-    stdout_args = ['zstd', '-z', '-q', '-o', f'{args[2]}-stdout.log.zst']
-    stderr_args = ['zstd', '-z', '-q', '-o', f'{args[2]}-stderr.log.zst']
+    stdout_args = ('zstd', '--compress', '--quiet', '-o', f'{args[2]}-stdout.log.zst')
+    stderr_args = ('zstd', '--compress', '--quiet', '-o', f'{args[2]}-stderr.log.zst')
+
     app_args = [args[1]]
 
     '''
