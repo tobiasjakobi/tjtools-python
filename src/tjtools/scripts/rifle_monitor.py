@@ -17,7 +17,7 @@ from os import environ, remove
 from socket import socket, AF_UNIX, SOCK_STREAM
 from time import asctime, localtime, time
 
-from rifle_cmd import CommandResult, rifle_cmdstat
+from .rifle_cmd import CommandResult, rifle_cmdstat
 
 
 ##########################################################################################
