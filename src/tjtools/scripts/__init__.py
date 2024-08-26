@@ -32,6 +32,10 @@ def greeter_idle_cli() -> int:
     from .greeter_idle import main as cli_main
     return cli_main(sys_argv)
 
+def kupdate_cli() -> int:
+    from .kupdate import main as cli_main
+    return cli_main(sys_argv)
+
 def mpv_ipc_cli() -> int:
     from .mpv_ipc import main as cli_main
     return cli_main(sys_argv)
