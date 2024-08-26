@@ -93,7 +93,7 @@ def main(args: list[str]) -> int:
     elif group == 'video':
         ret = handle_video(lg, config, action, device)
     elif group == 'wmi':
-        ret = handle_wmi(lg, action, device, identifier, value)
+        ret = handle_wmi(lg, config, action, device, identifier, value)
     else:
         lg.error(_log_prefix + f'received event for unknown group: {group}')
         lg.error(_log_prefix + f'event description: action={action}, device={device}, identifier={identifier}, value={value}')
