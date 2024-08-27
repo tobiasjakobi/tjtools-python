@@ -25,11 +25,24 @@ _sysfs_base = Path('/sys/class/power_supply/BAT0')
 ##########################################################################################
 
 def read_battery() -> str:
-    try:
-        charge_now = int(read_sysfs(_sysfs_base / 'charge_now'))
-        charge_full = int(read_sysfs(_sysfs_base / 'charge_full'))
+    charge_now = _sysfs_base / 'charge_now'
+    energy_now = _sysfs_base / 'energy_now'
 
-    except Exception:
+    if charge_now.is_file():
+        try:
+            value_now = int(read_sysfs(charge_now))
+            value_full = int(read_sysfs(_sysfs_base / 'charge_full'))
+
+        except Exception:
+            return None
+    elif energy_now.is_file():
+        try:
+            value_now = int(read_sysfs(energy_now))
+            value_full = int(read_sysfs(_sysfs_base / 'energy_full'))
+
+        except Exception:
+            return None
+    else:
         return None
 
     try:
@@ -38,7 +51,7 @@ def read_battery() -> str:
     except Exception:
         return None
 
-    value = (charge_now * 100) // charge_full
+    value = (value_now * 100) // value_full
     msg = 'unplugged' if ac_state == 0 else 'plugged in'
 
     return f'{value}% ({msg})'
