@@ -213,7 +213,7 @@ def main(args: list[str]) -> int:
         config = TouchpadConfig.from_path(_config_path)
 
     except Exception as exc:
-        print(f'error: valid to read config from path: {_config_path}: {exc}', file=sys.stderr)
+        print(f'error: fail to read config from path: {_config_path}: {exc}', file=sys.stderr)
 
         return 2
 
