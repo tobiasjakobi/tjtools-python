@@ -24,6 +24,10 @@ def cpufreq_perf_cli() -> int:
     from .cpufreq_perf import main as cli_main
     return cli_main(sys_argv)
 
+def dosbox_wrap_cli() -> int:
+    from .dosbox_wrap import main as cli_main
+    return cli_main(sys_argv)
+
 def gentoo_sandbox_cli() -> int:
     from .gentoo_sandbox import main as cli_main
     return cli_main(sys_argv)
@@ -34,6 +38,10 @@ def greeter_idle_cli() -> int:
 
 def kupdate_cli() -> int:
     from .kupdate import main as cli_main
+    return cli_main(sys_argv)
+
+def linklist_analyse_cli() -> int:
+    from .linklist_analyse import main as cli_main
     return cli_main(sys_argv)
 
 def mpv_ipc_cli() -> int:
