@@ -25,6 +25,21 @@ classifiers = [
 ]
 
 [project.scripts]
+album_transcode = "tjtools.scripts.audio:album_transcode_cli"
+audio_rename = "tjtools.scripts.audio:audio_rename_cli"
+bs1770gain_wrap = "tjtools.scripts.audio:bs1770gain_wrap_cli"
+eac_pretag = "tjtools.scripts.audio:eac_pretag_cli"
+flac_encode = "tjtools.scripts.audio:flac_encode_cli"
+id3_fixenc = "tjtools.scripts.audio:id3_fixenc_cli"
+reflac = "tjtools.scripts.audio:reflac_cli"
+vc_auto_albumprepare = "tjtools.scripts.audio:vc_auto_albumprepare_cli"
+vc_auto_tracknumber = "tjtools.scripts.audio:vc_auto_tracknumber_cli"
+vc_cleantags = "tjtools.scripts.audio:vc_cleantags_cli"
+vc_copytags = "tjtools.scripts.audio:vc_copytags_cli"
+vc_interactive_tag = "tjtools.scripts.audio:vc_interactive_tag_cli"
+vc_multi_tag = "tjtools.scripts.audio:vc_multi_tag_cli"
+vgmdb_albumcredits = "tjtools.scripts.audio:vgmdb_albumcredits_cli"
+vgmdb_tracklist = "tjtools.scripts.audio:vgmdb_tracklist_cli"
 acpi_action = "tjtools.scripts:acpi_action_cli"
 backup_manage = "tjtools.scripts:backup_manage_cli"
 checksum = "tjtools.scripts:checksum_cli"
