@@ -19,6 +19,7 @@ SLOT="0"
 RDEPEND="
 	>=dev-python/dbus-python-1.3.2[${PYTHON_USEDEP}]
 	>=dev-python/i3ipc-2.2.1[${PYTHON_USEDEP}]
+	>=dev-python/python-magic-0.4.27[${PYTHON_USEDEP}]
 	>=dev-python/python-systemd-235[${PYTHON_USEDEP}]
 	>=media-libs/mutagen-1.47.0[${PYTHON_USEDEP}]
 "
