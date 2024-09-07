@@ -21,11 +21,8 @@
 ## audioserver
 
 * add scripts from root and users
-* add scripts used by sway/waybar/ranger
 * add scripts from `local.d`
 
 ## onyx
 
-* add scripts from root and users
-* add scripts used by sway/waybar/ranger
-* add scripts from `local.d`
+* add scripts used by sway/ranger
