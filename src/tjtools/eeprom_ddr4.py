@@ -46,6 +46,9 @@ def _identify_i2c_dev(path: Path, identifier: str) -> bool:
 def eeprom_ddr4(i2c_addresses: Iterable[int]) -> None:
     '''
     Configure access to the EEPROM of the DDR4 modules.
+
+    Arguments:
+        i2c_addresses - the I2C addresses of the module's EEPROM
     '''
 
     if not isinstance(i2c_addresses, Iterable):
