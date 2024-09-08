@@ -9,9 +9,7 @@
 
 ## leena
 
-* add scripts from users
 * add scripts used by sway/waybar/ranger
-* add scripts from `local.d`
 
 ## ayaneo
 
