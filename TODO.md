@@ -11,11 +11,6 @@
 
 * add scripts used by sway/waybar/ranger
 
-## ayaneo
-
-* add scripts used by sway/ranger
-* add scripts from `local.d`
-
 ## audioserver
 
 * add scripts from root and users
