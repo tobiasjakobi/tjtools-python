@@ -15,7 +15,3 @@
 
 * add scripts from root and users
 * add scripts from `local.d`
-
-## onyx
-
-* add scripts used by sway/ranger
