@@ -9,7 +9,7 @@
 
 ## leena
 
-* add scripts used by sway/waybar/ranger
+* add scripts used by waybar/ranger
 
 ## audioserver
 
